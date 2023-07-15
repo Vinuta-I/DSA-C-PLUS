@@ -1,0 +1,32 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int subarraysXor(vector<int> &arr, int x) {
+    unordered_map<int, int> prefixXorCounts;
+    int currentXor = 0;
+    int count = 0;
+
+    for (int num : arr) {
+        currentXor ^= num;
+
+        if (currentXor == x) {
+            count++;
+        }
+
+        int requiredXor = currentXor ^ x;
+        count += prefixXorCounts[requiredXor];
+
+        prefixXorCounts[currentXor]++;
+    }
+
+    return count;
+}
+
+int main() {
+    vector<int> arr = {4, 2, 2, 6, 4};
+    int x = 6;
+    int result = subarraysXor(arr, x);
+    cout << "Number of subarrays with XOR equal to " << x << ": " << result << endl;
+
+    return 0;
+}
